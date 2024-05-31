@@ -1,0 +1,26 @@
+$promotedApps = @"
+njbar.exe
+Teams.exe
+OneDrive.exe
+ms-teams.exe
+OUTLOOK.EXE
+"@ -split "`n" | % { $_.trim() }
+
+$BaseRegPath = "HKCU:\Control Panel\NotifyIconSettings"
+foreach ($app in $promotedApps) {
+    foreach ($Icon in (Get-ItemProperty "$BaseRegPath\*" | Where-Object { $_.ExecutablePath -like "*\$app" -and $_.IsPromoted -ne 1}).PSChildName) {
+        Set-ItemProperty "$BaseRegPath\$Icon" -Name 'IsPromoted' -Value 1
+    }
+
+}
+
+#$HideApps = @"
+#vmware-tray.exe
+#"@ -split "`n" | % { $_.trim() }
+#
+#$BaseRegPath = "HKCU:\Control Panel\NotifyIconSettings"
+#foreach ($app in $HideApps) {
+#    foreach ($Icon in (Get-ItemProperty "$BaseRegPath\*" | Where-Object { $_.ExecutablePath -like "*\$app" -and $_.IsPromoted -ne 0}).PSChildName) {
+#        Set-ItemProperty "$BaseRegPath\$Icon" -Name 'IsPromoted' -Value 0
+#    }
+#}
