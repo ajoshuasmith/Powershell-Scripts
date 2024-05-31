@@ -1,0 +1,3 @@
+$bestUninstallPath = "C:\Program Files (x86)\GoToAssist Remote Support Customer\*\g2ax_uninstaller_customer.exe"
+
+Start-Process -FilePath $bestUninstallPath -ArgumentList "/uninstall /silent" -Wait -PassThru
