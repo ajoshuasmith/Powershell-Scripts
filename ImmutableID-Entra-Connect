@@ -1,0 +1,39 @@
+# Import necessary modules
+Import-Module ActiveDirectory
+Import-Module MSOnline
+
+# Define the Active Directory search base
+#$SearchBase = "OU=AADC Sync Test,OU=Tier2,DC=AAA,DC=local"  # Replace with your AD search base
+
+# Function to convert GUID to Base64 string
+function Convert-GuidToBase64 {
+    param(
+        [System.Guid]$Guid
+    )
+    $ByteArray = $Guid.ToByteArray()
+    $Base64 = [System.Convert]::ToBase64String($ByteArray)
+    return $Base64
+}
+
+# Get all AD users in the specified search base
+$ADUsers = Get-ADUser -Filter * #-SearchBase $SearchBase
+
+# Connect to Azure AD using Connect-MsolService
+Connect-MsolService
+
+# Loop through each AD user
+foreach ($ADUser in $ADUsers) {
+    $UserPrincipalName = $ADUser.UserPrincipalName
+    $ADGuid = $ADUser.ObjectGUID
+
+    # Convert AD GUID to Base64
+    $ImmutableID = Convert-GuidToBase64 -Guid $ADGuid
+
+    # Set the ImmutableID for the user in Azure AD
+    Set-MsolUser -UserPrincipalName $UserPrincipalName -ImmutableId $ImmutableID
+
+    Write-Host "Set ImmutableID for user $UserPrincipalName to $ImmutableID"
+}
+
+# Disconnect from Azure AD
+#Disconnect-MsolService
