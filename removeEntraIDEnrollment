@@ -1,3 +1,14 @@
+<#
+
+This was created to speed up some Entra ID joins on computers that may fail (Azure AD Join Error 801800a) and say it was already joined but it clearly is not. 
+
+You can do this by deleting all GUIDs under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Enrollments
+Make sure to NOT delete Context, Ownership, Status and ValidNodePaths.
+
+- Joshua Smith
+
+#>
+
 # Full Registry path
 $FullRegistryPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Enrollments"
 
