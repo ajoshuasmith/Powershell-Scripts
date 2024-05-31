@@ -1,3 +1,11 @@
+<#
+
+This was created for Entra Connect (AD Connect) implementations that would hard match Active Directory accounts with their Microsoft 365 accounts. We have a ton of instances where emails and active directory accounts were not named the same and would end up making a duplicate account.
+
+- Joshua Smith
+
+#>
+
 # Import necessary modules
 Import-Module ActiveDirectory
 Import-Module MSOnline
