@@ -1,3 +1,11 @@
+<#
+
+Everyone hates printers and queues always get backed up. 
+
+- Joshua Smith
+
+#>
+
 # Stop Print Spooler Service
 Get-Service -Name Spooler | Stop-Service -Force -Verbose
 
