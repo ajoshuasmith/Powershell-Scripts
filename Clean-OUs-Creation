@@ -1,0 +1,41 @@
+# Get the distinguished name of the domain
+$domain = (Get-ADDomain).DistinguishedName
+
+# Define the names of the organizational units for Tier0
+$tier0OUs = "Admin Accounts", "Admin Groups", "Admin Servers", "Admin Workstations"
+
+# Define the names of the organizational units for Tier1
+$tier1OUs = "Server Accounts", "Server Groups", "Servers"
+
+# Define the names of the organizational units for Tier2
+$tier2OUs = "Generic Users", "Email Only", "User Groups", "User Laptops", "User Workstations", "Users Active", "Users Disabled"
+
+# Define the parent organizational units
+$tier0ParentOU = "OU=Tier0,$domain"
+$tier1ParentOU = "OU=Tier1,$domain"
+$tier2ParentOU = "OU=Tier2,$domain"
+
+# Create the parent organizational units
+New-ADOrganizationalUnit -Name "Tier0" -Path $domain
+New-ADOrganizationalUnit -Name "Tier1" -Path $domain
+New-ADOrganizationalUnit -Name "Tier2" -Path $domain
+
+# Loop through each organizational unit name for Tier0 and create it under the parent organizational unit
+foreach ($ouName in $tier0OUs) {
+    $ouPath = "OU=$ouName,$tier0ParentOU"
+    New-ADOrganizationalUnit -Name $ouName -Path $tier0ParentOU
+}
+
+# Loop through each organizational unit name for Tier1 and create it under the parent organizational unit
+foreach ($ouName in $tier1OUs) {
+    $ouPath = "OU=$ouName,$tier1ParentOU"
+    New-ADOrganizationalUnit -Name $ouName -Path $tier1ParentOU
+}
+
+# Loop through each organizational unit name for Tier2 and create it under the parent organizational unit
+foreach ($ouName in $tier2OUs) {
+    $ouPath = "OU=$ouName,$tier2ParentOU"
+    New-ADOrganizationalUnit -Name $ouName -Path $tier2ParentOU
+}
+
+Write-Host "Organizational units created successfully."
