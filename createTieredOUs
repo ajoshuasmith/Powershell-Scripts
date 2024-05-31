@@ -1,3 +1,10 @@
+<#
+
+This PowerShell was created to automatically create specific OUs that I utilized for the "Tiered" OU model in Active Directory Environments as I wanted to rinse and repeat for all the customer environments that I worked with
+
+- Joshua Smith
+#>
+
 # Get the distinguished name of the domain
 $domain = (Get-ADDomain).DistinguishedName
 
