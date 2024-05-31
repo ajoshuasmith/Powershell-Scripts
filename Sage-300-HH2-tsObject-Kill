@@ -1,0 +1,18 @@
+# Stop all processes named tsObject.exe
+$processes = Get-Process -Name tsObject -ErrorAction SilentlyContinue
+if ($processes.Count -gt 1) {
+    Stop-Process -Name tsObject
+    Start-Sleep -Seconds 10
+}
+
+# Restart the hh2.MongoDB service
+Restart-Service -Name hh2.MongoDB
+
+# Wait for hh2.MongoDB service to start
+while ((Get-Service -Name hh2.MongoDB).Status -ne "Running") {
+    Start-Sleep -Seconds 10
+}
+
+# Restart the Hydrous.Host service (hh2 Synchronization Service)
+Restart-Service -Name Hydrous.Host
+
