@@ -1,3 +1,12 @@
+<#
+
+This was created to notify end users of upcoming patching so they can keep their machines powered on and would give them a cool little toast with a GIF to grab their attention. This was originally a CyberDrain script.
+
+- Joshua Smith
+
+#>
+
+
 Install-Module -Name BurntToast
 Install-module -Name RunAsUser
 invoke-ascurrentuser -scriptblock {
