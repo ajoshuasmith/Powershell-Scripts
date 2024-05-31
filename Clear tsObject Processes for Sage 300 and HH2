@@ -1,3 +1,11 @@
+<# 
+
+This was created for a customer who utilizes Sage 300 Construction and a software called HH2 which syncs invoices from a monitored Outlook folder into Sage 300. This ALWAYS gets hung up with a ton of processes "tsObject.exe" and the resolution was always to clear these processes and it would resume. Sage/HH2 did not ever fix this
+
+- Joshua Smith
+
+#>
+
 # Stop all processes named tsObject.exe
 $processes = Get-Process -Name tsObject -ErrorAction SilentlyContinue
 if ($processes.Count -gt 1) {
