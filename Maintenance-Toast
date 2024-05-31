@@ -1,0 +1,23 @@
+Install-Module -Name BurntToast
+Install-module -Name RunAsUser
+invoke-ascurrentuser -scriptblock {
+
+    $heroimage = New-BTImage -Source 'https://image.here' -HeroImage
+    $Text1 = New-BTText -Content "Message from IT"
+    $Text2 = New-BTText -Content "Reminder! Please keep your workstation/laptop powered on and connected to the internet for mandatory maintenance this Sunday at 12 AM! Please acknowledge this message."
+    $Button = New-BTButton -Content "Acknowledge" -Dismiss
+    #$Button2 = New-BTButton -Content "Reboot now" -Arguments "ToastReboot:" -ActivationType Protocol
+    #$5Min = New-BTSelectionBoxItem -Id 5 -Content '5 minutes'
+    #$10Min = New-BTSelectionBoxItem -Id 10 -Content '10 minutes'
+    #$1Hour = New-BTSelectionBoxItem -Id 60 -Content '1 hour'
+    #$4Hour = New-BTSelectionBoxItem -Id 240 -Content '4 hours'
+    #$1Day = New-BTSelectionBoxItem -Id 1440 -Content '1 day'
+    #$Items = $5Min, $10Min, $1Hour, $4Hour, $1Day
+    #$SelectionBox = New-BTInput -Id 'SnoozeTime' -DefaultSelectionBoxItemId 10 -Items $Items
+    $action = New-BTAction -Buttons $Button
+    $Binding = New-BTBinding -Children $text1, $text2 -HeroImage $heroimage
+    $Visual = New-BTVisual -BindingGeneric $Binding
+    $Content = New-BTContent -Visual $Visual -Actions $action
+    Submit-BTNotification -Content $Content
+
+}
